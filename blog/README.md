@@ -87,6 +87,19 @@ defaults:
 - 改完 push 等 Cloudflare 重新构建；如果浏览器还显示旧图，按 `Ctrl+F5` 强刷（图片被 Cloudflare 边缘缓存时可能要等几分钟）。
 - 图片路径必须是 `/images/...` 这种以 `/` 开头的站点绝对路径，不要带 `public`、也不要写相对路径。
 
+## 站点身份 / SEO / 页脚
+
+| 想改什么 | 改哪里 |
+| --- | --- |
+| 站点标题、语言、URL、`<meta name="description">`、keywords | `blog/_config.yml` 的 `title` / `subtitle` / `description` / `keywords` / `url` |
+| 导航栏和页脚显示的名字、副标题 | `blog/_config.redefine.yml` 的 `info.title` / `info.subtitle` / `info.author` |
+| 首页横幅大标题、副标题 | `blog/_config.redefine.yml` 的 `home_banner.title` / `home_banner.subtitle.text`（默认标题是主题的 "Theme Redefine"） |
+| 分享卡片的描述、配图 | `global.open_graph.description` / `global.open_graph.image` |
+| 页脚"博客已运行 X 天"的起算时间 | `footer.start`（默认是主题作者的 `2022/8/17`，一定要改成自己的） |
+| 备案号（国内服务器才需要） | `footer.icp` |
+
+页脚那行"主题 Redefine v2.9.0"是主题作者要求保留的署名，写死在 `layout/components/footer/footer.ejs`（模板里有注释说明），不在配置项里，建议保留。
+
 ## Cloudflare Pages 部署设置
 
 | 设置项 | 值 |

@@ -47,6 +47,23 @@ navbar:
       path: /tags
       icon: fa-regular fa-tags
 
+# 首页横幅（hero）的标题与副标题
+# 主题默认标题是 "Theme Redefine"、背景是主题自带的壁纸，想换成自己的图见上面的 home_banner.image
+home_banner:
+  title: no9club
+  subtitle:
+    text:
+      - 记录与分享
+
+# SEO / 分享卡片（og:description）描述
+global:
+  open_graph:
+    description: no9club 的博客：记录学习、折腾与作品展示。
+
+# 页脚：博客运行时长从这一天起算（主题默认是主题作者的 2022/8/17）
+footer:
+  start: 2026/09/30 00:00:00
+
 # 评论：暂时关闭。主题默认是开启的，但 system 指向 waline 的示例地址
 # （https://example.example.com），评论区会渲染出来却连不上，所以先关掉。
 # 想启用时把 enable 改成 true，选一个 system 并填好自建后端地址，例如：
