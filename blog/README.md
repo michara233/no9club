@@ -56,6 +56,37 @@ npm run dev                      # 本地预览 http://localhost:4000
 
 归档（`/archives`）、分类（`/categories`）、标签（`/tags`）三个页面已在 `source/` 下建好，导航栏链接在 `_config.redefine.yml` 的 `navbar.links` 里，可自行增删。
 
+## 换头像 / 图标 / 其它图片
+
+1. 把图片放进 `blog/source/images/`（构建时原样发布到 `/images/...`）。
+2. 在 `blog/_config.redefine.yml` 里把对应配置指向它，路径写成 `/images/文件名`。
+
+| 想改什么 | 配置项 | 主题默认值 |
+| --- | --- | --- |
+| 站点头像（首页侧栏、文章页作者栏） | `defaults.avatar` | `/images/redefine-avatar.svg` |
+| 浏览器标签页图标 | `defaults.favicon` | `/images/redefine-favicon.svg` |
+| 导航栏 logo | `defaults.logo` | 空（不显示） |
+| 首页横幅大图 | `home_banner.image.light` / `.dark` | `wallhaven-wqery6-*.webp` |
+| 分享卡片默认图 | `global.open_graph.image` | `/images/redefine-og.webp` |
+| 文章封面 | 文章 front matter 的 `cover` / `banner` | 无 |
+| 文章作者头像 | 文章 front matter 的 `avatar` | 无 |
+
+例如换头像和 favicon：
+
+```yaml
+defaults:
+  avatar: /images/avatar.png
+  favicon: /images/favicon.png
+```
+
+`blog/_config.redefine.yml` 里已经把这些项写成注释了，取消注释改路径即可。
+
+注意：
+
+- 图片不要放进仓库根目录的 `source/`，那是主题资源目录（会被同步进 `themes/redefine`，也会被上游更新覆盖）。主题自带的默认图在那里，仅作参考。
+- 改完 push 等 Cloudflare 重新构建；如果浏览器还显示旧图，按 `Ctrl+F5` 强刷（图片被 Cloudflare 边缘缓存时可能要等几分钟）。
+- 图片路径必须是 `/images/...` 这种以 `/` 开头的站点绝对路径，不要带 `public`、也不要写相对路径。
+
 ## Cloudflare Pages 部署设置
 
 | 设置项 | 值 |
