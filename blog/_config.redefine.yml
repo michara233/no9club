@@ -1,0 +1,21 @@
+# 主题配置覆盖（Hexo 会把它深度合并到主题自带的 _config.yml 之上）
+# 只写需要改的项即可，全部可选项见仓库根目录 _config.yml。
+
+# 站点基本信息（导航栏标题、页脚作者等都用这里）
+info:
+  title: no9club
+  subtitle: 记录与分享
+  author: no9club
+  url: https://no9club.pages.dev
+
+# RSS：/atom.xml（依赖 hexo-generator-feed，已随 blog/package.json 安装）
+plugins:
+  feed:
+    enable: true
+  # Mermaid 图表：开启后 theme 必须是 light/dark 映射，不能写成单个主题名
+  # mermaid:
+  #   enable: true
+  #   version: "11.4.1"
+  #   theme:
+  #     light: "default"
+  #     dark: "dark"

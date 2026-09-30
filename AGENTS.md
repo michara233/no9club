@@ -6,6 +6,15 @@ This file is for automated coding agents working in this repo.
 - Hexo theme implementation with browser JS in `source/js/**`, Hexo Node scripts in `scripts/**`, and Stylus/Tailwind CSS in `source/css/**`.
 - Build outputs are committed to `source/js/build/**` and `source/css/build/tailwind.css`.
 - The theme config lives in `_config.yml` and is exported at build/runtime by `scripts/config-export.js`.
+- `blog/` holds the Hexo site that consumes this theme (the repo is both the theme and the blog). The theme source stays in the repo root; `blog/tools/sync-theme.mjs` copies it into `blog/themes/redefine` before every site build, and that copy is gitignored.
+
+## Blog Site (`blog/`)
+- Local install/preview: `cd blog && npm install && npm run dev` (http://localhost:4000).
+- Full build: `cd blog && npm run build` (`sync-theme` -> `hexo clean` -> `hexo generate`, output `blog/public`).
+- Cloudflare Pages project settings: root directory `blog`, build command `npm run build`, output directory `public`.
+- Site identity lives in `blog/_config.yml` plus `blog/_config.redefine.yml` (deep-merged over the theme's root `_config.yml`); keep the theme defaults file lean and put per-blog overrides in `_config.redefine.yml`.
+- `blog/` is an npm project with its own `package-lock.json`; the root project's lockfiles are unrelated to it.
+- Theme plugins required at site build time: `hexo-wordcount` (word count, on by default) and `hexo-generator-feed` (RSS). Local search additionally needs `hexo-generator-searchdb`.
 
 ## Environment & Tooling
 - Package manager: npm (CI uses `npm install`).

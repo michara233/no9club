@@ -1,0 +1,8 @@
+node_modules/
+public/
+db.json
+*.log
+.deploy*/
+
+# 由 tools/sync-theme.mjs 在构建前生成
+themes/
