@@ -34,3 +34,4 @@ npm run dev      # http://localhost:4000
 - 博客本体（标题、语言、链接格式、每页篇数）：`blog/_config.yml`
 - 主题外观（导航栏、配色、首页横幅、评论、插件开关）：`blog/_config.redefine.yml`
 - 主题的完整默认值（所有可配置项都在这里）：仓库根目录的 `_config.yml`
+<a href="/download/486.jpg" download>486.jpg</a>
