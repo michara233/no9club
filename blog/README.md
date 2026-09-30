@@ -25,6 +25,37 @@ npm run new "标题"  # 新建文章
 npm run build      # 生成静态站点到 public/
 ```
 
+## 添加文章
+
+```bash
+cd blog
+npm run new "我的第一篇文章"     # 生成 source/_posts/我的第一篇文章.md
+npm run dev                      # 本地预览 http://localhost:4000
+```
+
+写完 `git add source/_posts && git commit && git push`，Cloudflare 会自动重新构建。
+
+文章开头的 front matter（`---` 之间的部分）常用字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| `title` | 标题 |
+| `date` | 发布时间，`YYYY-MM-DD HH:mm:ss` |
+| `updated` | 更新时间，可选 |
+| `categories` / `category` | 分类，数组或单个值 |
+| `tags` / `tag` | 标签，数组或单个值 |
+| `description` | 摘要，同时用于 SEO/分享卡片 |
+| `cover` / `banner` | 文章顶部大图；`thumbnail: false` 可关掉列表缩略图 |
+| `sticky: true` | 置顶到首页 |
+| `comments: false` | 单篇关闭评论 |
+| `copyright` / `license` | 版权开关与协议 |
+
+文章 URL 由 `_config.yml` 的 `permalink: :year/:month/:day/:title/` 决定，`:title` 取文件名（改标题请同时改文件名或 front matter 里的 `permalink`）。
+
+图片建议放在 `blog/source/images/`，正文里用 `![说明](/images/xxx.jpg)` 引用。**不要**放进仓库根目录的 `source/`——那是主题资源目录，会被同步进 `themes/redefine`。
+
+归档（`/archives`）、分类（`/categories`）、标签（`/tags`）三个页面已在 `source/` 下建好，导航栏链接在 `_config.redefine.yml` 的 `navbar.links` 里，可自行增删。
+
 ## Cloudflare Pages 部署设置
 
 | 设置项 | 值 |

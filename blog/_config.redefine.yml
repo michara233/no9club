@@ -8,6 +8,22 @@ info:
   author: no9club
   url: https://no9club.pages.dev
 
+# 导航栏（路径对应 blog/source/ 下的页面，图标用 Font Awesome 类名）
+navbar:
+  links:
+    Home:
+      path: /
+      icon: fa-regular fa-house
+    归档:
+      path: /archives
+      icon: fa-regular fa-archive
+    分类:
+      path: /categories
+      icon: fa-regular fa-folder
+    标签:
+      path: /tags
+      icon: fa-regular fa-tags
+
 # RSS：/atom.xml（依赖 hexo-generator-feed，已随 blog/package.json 安装）
 plugins:
   feed:
