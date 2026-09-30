@@ -8,17 +8,17 @@ info:
   author: no9club
   url: https://no9club.pages.dev
 
-# 图片资源：把自己的图片放进 blog/source/images/，这里写 /images/文件名
-# 主题自带的默认图在仓库根目录 source/images/ 下，想换成自己的就把下面整段取消注释并改路径。
+# 图片资源：图片放在仓库根目录的主题 source/images/（主题自带图在那里），
+# 或者放在 blog/source/images/（站点自己的图），两者构建后都在同一个 /images/ 路径下，配置里统一写 /images/文件名。
 # 注意：像 defaults: / home_banner: 这种只写键、子项全被注释掉的写法，会把主题对应的整段配置
 # 覆盖成 null，页面会渲染失败（Hexo 只打 ERROR 日志但退出码仍是 0）。要么整段注释，要么至少留一个子项。
-# defaults:
-#   # 站点头像（首页侧栏、文章页作者栏），默认 /images/redefine-avatar.svg
-#   avatar: /images/avatar.png
-#   # 浏览器标签页图标，默认 /images/redefine-favicon.svg
-#   favicon: /images/favicon.png
-#   # 导航栏 logo，留空则不显示；填了会出现在站点标题左侧
-#   logo: /images/logo.svg
+defaults:
+  # 站点头像（首页侧栏、文章页作者栏）
+  avatar: /images/redefine-avatar.png
+  # 浏览器标签页图标，默认 /images/redefine-favicon.svg
+  # favicon: /images/favicon.png
+  # 导航栏 logo，留空则不显示；填了会出现在站点标题左侧
+  # logo: /images/logo.svg
 
 # 首页横幅大图（light / dark 两套，按深浅色模式切换）
 # home_banner:
