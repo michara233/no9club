@@ -472,7 +472,7 @@ plugins:
   mermaid:
     enable: false # enable mermaid or not
     version: "11.4.1" # default v11.4.1
-    theme: redefine
+    theme:
       light: "default"
       dark: "dark"
 # PLUGINS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< end

@@ -38,8 +38,5 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^4.1.11",
     "terser": "^5.36.0"
-  },
-  "dependencies": {
-    "hexo-theme-redefine": "^2.9.0"
   }
 }
