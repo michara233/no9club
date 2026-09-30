@@ -123,10 +123,30 @@ Error: Pages only supports files up to 25 MiB in size
   dowload/咩.zip is 27.7 MiB in size
 ```
 
-所以大文件不要放进 `blog/source/`，建议：
+所以大文件不要放进 `blog/source/`，要放到站外再在文章里链接。**读者主要在国内，所以优先用国内对象存储**（GitHub Releases 国内下载很慢，只适合海外读者）：
 
-1. 上传到 **GitHub Releases**（单文件最大 2 GiB）：仓库页面 → Releases → Draft a new release → 新建一个固定 tag（例如 `downloads`）→ 把附件拖进去 → Publish release，然后用 `https://github.com/<用户名>/<仓库名>/releases/download/<tag>/<文件名>` 作为文章里的下载链接。
-2. 或者用网盘 / 对象存储（Cloudflare R2、阿里云 OSS 等），直接把分享链接写进文章。
+### 推荐：腾讯云 COS / 阿里云 OSS（国内最快，链接永久）
+
+以腾讯云 COS 为例：
+
+1. 注册并完成实名认证（微信扫码即可），开通 COS（按量计费，开通不需要预充值）。
+2. 新建存储桶（Bucket）：地域选离读者近的（如广州/上海），**访问权限选「公有读私有写」**（否则直链会 403）。
+3. 进入桶 → 上传文件（控制台直接拖上去即可）→ 上传后对象的访问权限确认是「公有读」。
+4. 复制对象的访问地址，形如：
+   `https://<桶名>-<APPID>.cos.<地域>.myqcloud.com/mie.zip`
+   把这行粘到文章的 `<a href="...">` 里即可（`pages.dev` 的博客链接到它没有任何跨域问题）。
+5. 成本与防护：存储约 ¥0.1/GB/月，外网下行流量约 ¥0.5/GB（以官网价格为准）；27MB 被下载 1000 次 ≈ 十几元。建议顺便设置：
+   - **防盗链**（只允许自己的博客域名 + 空 Referer 访问）；
+   - **用量告警**（防止被人刷流量）。
+
+阿里云 OSS 步骤基本一致，直链形如 `https://<桶名>.oss-<地域>.aliyuncs.com/mie.zip`。用云厂商自带的默认域名**不需要备案**；只有绑定自己的域名（如 `dl.no9club.xxx`）才需要。
+
+### 备选
+
+- **网盘直链**（123 云盘 / 蓝奏云 / 钛盘）：上传即用、免费，但链接可能失效、页面带广告、可能限速。
+- **Cloudflare R2**：和博客同属 Cloudflare，免费 10 GB、出网免费，管理统一，但国内速度就是 Cloudflare 边缘的速度，不会比博客本身更快。
+- **GitHub Releases**（单文件最大 2 GiB）：管理最省事，但国内下载慢，只建议给海外读者用。
+- **拆成 <25 MiB 分卷放站内**：零第三方，但读者要 `copy /b part1+part2 mie.zip` 合并，体验差。
 
 `blog/.attachments/` 是本地暂存目录（已 gitignore），放还没上传的大文件，不会被提交也不会进构建产物。
 
