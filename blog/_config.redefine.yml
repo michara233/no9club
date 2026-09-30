@@ -47,6 +47,22 @@ navbar:
       path: /tags
       icon: fa-regular fa-tags
 
+# 评论：暂时关闭。主题默认是开启的，但 system 指向 waline 的示例地址
+# （https://example.example.com），评论区会渲染出来却连不上，所以先关掉。
+# 想启用时把 enable 改成 true，选一个 system 并填好自建后端地址，例如：
+#   comment:
+#     enable: true
+#     system: twikoo  # waline, gitalk, twikoo, giscus, utterances, artalk
+#     config:
+#       twikoo:
+#         version: 1.6.10            # 会拼进 cdnjs 地址，别填 cdnjs 上没有的版本
+#         server_url: https://你的后端地址
+#         region:                    # 腾讯云开发要填地域，其余留空
+# 单篇文章关评论：front matter 写 comment: false
+# 独立页面默认不显示评论，要显示需在 front matter 写 comments: true
+comment:
+  enable: false
+
 # RSS：/atom.xml（依赖 hexo-generator-feed，已随 blog/package.json 安装）
 plugins:
   feed:
