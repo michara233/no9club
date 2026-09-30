@@ -111,3 +111,23 @@ defaults:
   node node_modules/hexo-cli/bin/hexo generate 2>&1 | grep -i error   # 应为空
   ls -l public/index.html                                            # 不应为 0 字节
   ```
+
+- `npm run build` 最后会跑 `tools/check-output-size.mjs` 自检：单个文件超过 25 MiB 或页面渲染成 0 字节都会直接让构建失败并打印原因，这样就不用等 Cloudflare 那边报错（Cloudflare 的报错在最后一步，信息比较绕）。
+
+## 大附件 / 提供下载
+
+**Cloudflare Pages 单个文件上限 25 MiB（硬限制，不能通过配置放宽）**，超出会构建成功但部署校验失败：
+
+```
+Error: Pages only supports files up to 25 MiB in size
+  dowload/咩.zip is 27.7 MiB in size
+```
+
+所以大文件不要放进 `blog/source/`，建议：
+
+1. 上传到 **GitHub Releases**（单文件最大 2 GiB）：仓库页面 → Releases → Draft a new release → 新建一个固定 tag（例如 `downloads`）→ 把附件拖进去 → Publish release，然后用 `https://github.com/<用户名>/<仓库名>/releases/download/<tag>/<文件名>` 作为文章里的下载链接。
+2. 或者用网盘 / 对象存储（Cloudflare R2、阿里云 OSS 等），直接把分享链接写进文章。
+
+`blog/.attachments/` 是本地暂存目录（已 gitignore），放还没上传的大文件，不会被提交也不会进构建产物。
+
+已经误提交过的大文件会永久留在 git 历史里；在意仓库体积的话可以用 `git filter-repo` 清理，但那要重写历史并强制推送，一般不值得。

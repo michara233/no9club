@@ -8,7 +8,7 @@
   "description": "no9club blog site built with the hexo-theme-redefine fork in the repository root.",
   "scripts": {
     "sync-theme": "node tools/sync-theme.mjs",
-    "build": "npm run sync-theme && hexo clean && hexo generate",
+    "build": "npm run sync-theme && hexo clean && hexo generate && node tools/check-output-size.mjs",
     "dev": "npm run sync-theme && hexo clean && hexo server",
     "clean": "hexo clean",
     "new": "hexo new"

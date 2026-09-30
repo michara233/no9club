@@ -6,3 +6,7 @@ db.json
 
 # 由 tools/sync-theme.mjs 在构建前生成
 themes/
+
+# 大附件（超过 Cloudflare Pages 单文件上限 25 MiB）：本地留一份用于预览/上传，
+# 不要提交；对外提供下载请放 GitHub Releases 或网盘。
+.attachments/
