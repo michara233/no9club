@@ -3,9 +3,9 @@
 
 # 站点基本信息（导航栏标题、页脚作者等都用这里）
 info:
-  title: Welcome Learn
+  title: no9club
   subtitle: 记录与分享游戏制作经验
-  author: no9club
+  author: Welcome Learn
   url: https://no9club.pages.dev
 
 # 图片资源：图片放在仓库根目录的主题 source/images/（主题自带图在那里），
