@@ -5,7 +5,7 @@
 info:
   title: no9club
   subtitle: 记录与分享游戏制作经验
-  author: Welcome Learn
+  author: no9club
   url: https://no9club.pages.dev
 
 # 图片资源：图片放在仓库根目录的主题 source/images/（主题自带图在那里），
@@ -50,15 +50,15 @@ navbar:
 # 首页横幅（hero）的标题与副标题
 # 主题默认标题是 "Theme Redefine"、背景是主题自带的壁纸，想换成自己的图见上面的 home_banner.image
 home_banner:
-  title: no9club
+  title: Welcome to learning
   subtitle:
     text:
-      - 记录与分享
+      - 记录与分享游戏制作经验
 
 # SEO / 分享卡片（og:description）描述
 global:
   open_graph:
-    description: no9club 的博客：记录学习、折腾与作品展示。
+    description: 第九艺术俱乐部的博客：记录学习、折腾与作品展示。
 
 # 页脚：博客运行时长从这一天起算（主题默认是主题作者的 2022/8/17）
 footer:
