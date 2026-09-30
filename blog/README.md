@@ -87,6 +87,55 @@ defaults:
 - 改完 push 等 Cloudflare 重新构建；如果浏览器还显示旧图，按 `Ctrl+F5` 强刷（图片被 Cloudflare 边缘缓存时可能要等几分钟）。
 - 图片路径必须是 `/images/...` 这种以 `/` 开头的站点绝对路径，不要带 `public`、也不要写相对路径。
 
+## 文章里插入图片
+
+两种写法都实测可用，挑一种顺手的固定用就行。
+
+### 写法一：图片统一放站点目录（最简单）
+
+1. 图片放进 `blog/source/images/`，例如 `blog/source/images/screenshot.png`。
+2. 文章里写**以 `/` 开头的绝对路径**：
+
+```markdown
+![截图说明](/images/screenshot.png)
+```
+
+`/images/...` 是从站点根目录算起的，不要写 `./`，也不要带 `public`。
+
+### 写法二：每篇文章一个资源文件夹（图片多时更整齐）
+
+`blog/_config.yml` 里已经配好：
+
+```yaml
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
+```
+
+用法：`npm run new "文章标题"` 会同时生成 `source/_posts/文章标题/` 目录，把图片丢进去，正文里直接写文件名：
+
+```markdown
+![截图说明](screenshot.png)
+```
+
+构建后图片会被复制到 `public/2026/09/30/文章标题/screenshot.png`，页面引用的就是这个路径。
+
+**注意**：`post_asset_folder` 只对**相对路径**生效。如果图片不在该文章的资源文件夹里，写 `![x](screenshot.png)` 会被渲染器改写成 `/screenshot.png`（去站点根目录找），结果是 404——相对路径只配合资源文件夹使用，其它情况一律用 `/images/...`。
+
+### 细节开关
+
+| 想调整 | 配置项（写在 `blog/_config.redefine.yml`） |
+| --- | --- |
+| 图片圆角 | `articles.style.image_border_radius`（默认 `14px`） |
+| 图片对齐 | `articles.style.image_alignment`（`center` / `left`） |
+| 显示图片说明（取 alt 文字） | `articles.style.image_caption: true` |
+| 关闭图片懒加载 | `articles.lazyload: false` |
+
+- 文章里的图片默认**点击可放大**（主题自带查看器），不用额外配置。
+- 文章封面用 front matter：`cover: /images/cover.jpg`；`thumbnail: false` 可以关掉首页列表里的缩略图。
+- 图片别太大：超过 25 MiB 会被 `tools/check-output-size.mjs` 拦下（Cloudflare Pages 单文件上限），而且大图会永久留在 git 历史里、拖慢国内访问。建议压到 200 KB 以内、宽度 1600px 左右，格式优先 WebP。
+
 ## 站点身份 / SEO / 页脚
 
 | 想改什么 | 改哪里 |
