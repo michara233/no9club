@@ -104,3 +104,10 @@ defaults:
 - 主题需要 `hexo-wordcount`（字数统计）和 `hexo-generator-feed`（RSS），已列入 `dependencies`。
 - 如果要开启本地搜索，需要额外安装 `hexo-generator-searchdb`，并在 `_config.redefine.yml` 里把 `navbar.search.enable` 设为 `true`。
 - 如果 `themes/redefine` 目录看起来缺失，这是正常的：它是构建时生成的，运行 `npm run sync-theme` 即可重建。
+- 在 `_config.redefine.yml` 里不要留「只写键名、子项全被注释」的空分区（例如孤零零一行 `defaults:`）：它会把主题对应的整段配置覆盖成 `null`，页面直接渲染失败。要么整段注释掉，要么至少留一个子项。
+- **注意 Hexo 的退出码不可信**：页面渲染出错时它只打印 `ERROR`，退出码仍然是 0。改完配置后除了看构建日志的 ERROR，还要确认产物不是空文件：
+
+  ```bash
+  node node_modules/hexo-cli/bin/hexo generate 2>&1 | grep -i error   # 应为空
+  ls -l public/index.html                                            # 不应为 0 字节
+  ```
