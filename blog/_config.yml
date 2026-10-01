@@ -81,5 +81,13 @@ include:
 exclude:
 ignore:
 
+# 站内搜索（本地搜索）的索引文件，由 hexo-generator-searchdb 生成
+# 主题的搜索框会去请求 config.root + path，所以这里的 path 必须和下面保持一致
+search:
+  path: search.json
+  field: post
+  content: true
+  format: striptags
+
 # Extensions
 theme: redefine

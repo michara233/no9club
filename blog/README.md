@@ -161,10 +161,26 @@ marked:
 
 部署完成后，把 `blog/_config.yml` 和 `blog/_config.redefine.yml` 里的 `url` 改成正式域名（例如 `https://no9club.pages.dev` 或你自己的域名），否则文章里的绝对链接和 RSS 会指向错误地址。
 
+## 站内搜索
+
+主题自带**本地搜索**（纯前端，不需要第三方服务，读者也不用登录），已开启：
+
+| 部分 | 在哪 | 说明 |
+| --- | --- | --- |
+| 索引文件 | `blog/_config.yml` 的 `search:` 段 | `hexo-generator-searchdb` 生成 `public/search.json`；`path` 必须和下面主题请求的路径一致 |
+| 搜索 UI | `blog/_config.redefine.yml` 的 `navbar.search` | `enable: true` 开启（导航栏出现搜索图标，点开是弹窗）；`preload: true` 表示页面加载时预取索引，文章多了想省流量可改 `false` |
+
+索引内容由 `content: true` / `format: striptags` 控制：收录标题和纯文本正文，所以搜正文关键词也能命中。
+
+注意：
+
+- 只有**已发布**的文章会进索引：`published: false`、`source/_drafts/` 里的草稿都不收录。
+- 加密文章（front matter 写 `password`）的正文不会以明文出现在索引里（主题在生成索引前就加密了正文），所以搜不到它的内容——这是符合预期的。
+- 文章多了以后 `public/search.json` 会变大（几十篇通常几百 KB），配合 `preload: false` 更省流量。
+
 ## 说明
 
-- 主题需要 `hexo-wordcount`（字数统计）和 `hexo-generator-feed`（RSS），已列入 `dependencies`。
-- 如果要开启本地搜索，需要额外安装 `hexo-generator-searchdb`，并在 `_config.redefine.yml` 里把 `navbar.search.enable` 设为 `true`。
+- 主题需要 `hexo-wordcount`（字数统计）、`hexo-generator-feed`（RSS）和 `hexo-generator-searchdb`（站内搜索），都已列入 `dependencies`。
 - 如果 `themes/redefine` 目录看起来缺失，这是正常的：它是构建时生成的，运行 `npm run sync-theme` 即可重建。
 - 在 `_config.redefine.yml` 里不要留「只写键名、子项全被注释」的空分区（例如孤零零一行 `defaults:`）：它会把主题对应的整段配置覆盖成 `null`，页面直接渲染失败。要么整段注释掉，要么至少留一个子项。
 - **注意 Hexo 的退出码不可信**：页面渲染出错时它只打印 `ERROR`，退出码仍然是 0。改完配置后除了看构建日志的 ERROR，还要确认产物不是空文件：

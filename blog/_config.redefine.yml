@@ -46,6 +46,11 @@ navbar:
     标签:
       path: /tags
       icon: fa-regular fa-tags
+  # 站内搜索（本地搜索）：索引由 hexo-generator-searchdb 生成，配置在 blog/_config.yml 的 search 段
+  search:
+    enable: true
+    # 页面加载时预取搜索索引（搜索更快；文章多了想省流量可改 false）
+    preload: true
 
 # 首页横幅（hero）的标题、副标题与背景图
 # 背景图浅色/深色模式各一张，只想用一张就两张填同一个路径；
