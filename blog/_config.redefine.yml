@@ -47,10 +47,14 @@ navbar:
       path: /tags
       icon: fa-regular fa-tags
 
-# 首页横幅（hero）的标题与副标题
-# 主题默认标题是 "Theme Redefine"、背景是主题自带的壁纸，想换成自己的图见上面的 home_banner.image
+# 首页横幅（hero）的标题、副标题与背景图
+# 背景图浅色/深色模式各一张，只想用一张就两张填同一个路径；
+# 图片放仓库根目录 source/images/ 或 blog/source/images/ 都行，路径统一写 /images/文件名。
 home_banner:
   title: Welcome to learning
+  image:
+    light: /images/back.jpg
+    dark: /images/back.jpg
   subtitle:
     text:
       - 记录与分享游戏制作经验
