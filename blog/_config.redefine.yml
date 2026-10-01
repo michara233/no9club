@@ -16,7 +16,7 @@ defaults:
   # 站点头像（首页侧栏、文章页作者栏）
   avatar: /images/redefine-avatar.png
   # 浏览器标签页图标，默认 /images/redefine-favicon.svg
-  # favicon: /images/favicon.png
+  favicon: /images/logo.png
   # 导航栏 logo，留空则不显示；填了会出现在站点标题左侧
   # logo: /images/logo.svg
 
