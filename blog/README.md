@@ -196,6 +196,32 @@ avatar: /images/zhangsan.png   # 可选，这一篇单独用这个头像
 - 加密文章（front matter 写 `password`）的正文不会以明文出现在索引里（主题在生成索引前就加密了正文），所以搜不到它的内容——这是符合预期的。
 - 文章多了以后 `public/search.json` 会变大（几十篇通常几百 KB），配合 `preload: false` 更省流量。
 
+## 装成手机 App（PWA）
+
+站点已经按 PWA 配好：手机浏览器访问后可以"添加到主屏幕"，之后像 App 一样全屏运行、有独立图标，断网也能看到已缓存的页面。
+
+| 文件 | 作用 |
+| --- | --- |
+| `blog/source/manifest.webmanifest` | 应用名、图标、启动方式（`display: standalone`）、主题色 |
+| `blog/source/sw.js` | Service Worker：页面网络优先、静态资源"先用缓存后台更新"，断网回退缓存 |
+| `blog/source/images/pwa-icon-{180,192,512}.png`、`pwa-icon-maskable-512.png` | 图标（由头像缩放生成；maskable 那张带品牌底色，适配安卓的自适应图标） |
+| `blog/scripts/pwa.js` | 用 Hexo 的 injector 往每个页面注入 manifest、主题色、iOS 图标标签和 SW 注册脚本（不改主题模板） |
+
+安装方式：
+
+- **安卓 Chrome**：菜单里会出现「安装应用 / 添加到主屏幕」（部分版本会自动弹提示）。
+- **iOS Safari**：点「分享」→「添加到主屏幕」（iOS 不会自动提示安装；图标用的是 `pwa-icon-180.png`）。
+- PWA 需要 HTTPS，Cloudflare Pages 自带，`http://localhost:4000` 本地预览也算安全上下文。
+
+维护要点：
+
+- 改了缓存策略、或想强制所有访客刷新缓存：把 `blog/source/sw.js` 里的 `VERSION` 加一（旧缓存会自动清理）。
+- 换图标：直接替换 `blog/source/images/pwa-icon-*.png` 四个文件即可（尺寸 180 / 192 / 512 / 512）。
+- 改 App 名称、起始页、主题色：改 `blog/source/manifest.webmanifest`；`theme-color` 与 iOS 的标题还在 `blog/scripts/pwa.js` 里，两处保持一致。
+- 静态资源是"先用缓存、后台更新"，所以发版后极少数访客可能第一次打开看到旧样式，刷新一次即最新。
+
+想要能装到手机上的**独立安装包（APK）**：PWA 是前提，接着可以用 [PWABuilder](https://www.pwabuilder.com/)（网页版，输入站点地址就能生成安卓包）或 Bubblewrap 打包；iOS 上架需要 Mac + Apple 开发者账号，国内分发还需注意 App 备案要求。
+
 ## 说明
 
 - 主题需要 `hexo-wordcount`（字数统计）、`hexo-generator-feed`（RSS）和 `hexo-generator-searchdb`（站内搜索），都已列入 `dependencies`。
