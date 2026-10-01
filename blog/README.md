@@ -136,6 +136,24 @@ marked:
 - 文章封面用 front matter：`cover: /images/cover.jpg`；`thumbnail: false` 可以关掉首页列表里的缩略图。
 - 图片别太大：超过 25 MiB 会被 `tools/check-output-size.mjs` 拦下（Cloudflare Pages 单文件上限），而且大图会永久留在 git 历史里、拖慢国内访问。建议压到 200 KB 以内、宽度 1600px 左右，格式优先 WebP。
 
+## 文章作者信息
+
+默认每篇文章都显示全站作者（`blog/_config.redefine.yml` 的 `info.author`）。想让某篇文章署名不同的人，在它的 front matter 里写：
+
+```yaml
+---
+title: 某位学长的作品
+date: 2026-09-30 23:00:00
+author: 张三
+avatar: /images/zhangsan.png   # 可选，这一篇单独用这个头像
+---
+```
+
+- **`author` 请用字符串写法**。主题也支持 `author: {name: 张三, avatar: xxx}` 这种对象写法，作者名和头像能正常显示，但会有一个副作用：`<meta property="article:author">` 会变成 `[object Object]`（`layout/components/header/head.ejs` 把对象直接交给了 Hexo 的 `open_graph` 助手）。想单独换头像就用上面的 `avatar:` 键——`page.avatar` 的优先级高于全站头像 `defaults.avatar`。
+- 显示位置：文章头部的作者栏、文末版权模块的「作者」一行、以及分享卡片的作者。
+- 作者栏只在 `info.author` 或站点 `author` 有值时才出现（当前两者都有值，所以一直显示）。
+- 想加「楼主 / Lv1」这类作者标签：`articles.author_label`（`enable`、`auto` 按发文数自动分级、`list` 自定义标签列表）。
+
 ## 站点身份 / SEO / 页脚
 
 | 想改什么 | 改哪里 |
