@@ -21,10 +21,10 @@ defaults:
   # logo: /images/logo.svg
 
 # 首页横幅大图（light / dark 两套，按深浅色模式切换）
-# home_banner:
-#   image:
-#     light: /images/banner-light.webp
-#     dark: /images/banner-dark.webp
+  home_banner:
+   image:
+     light: /images/back.jpg
+     dark: /images/back.jpg
 
 # 分享卡片（og:image）默认图，默认 /images/redefine-og.webp
 # global:
