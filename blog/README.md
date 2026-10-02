@@ -154,6 +154,26 @@ avatar: /images/zhangsan.png   # 可选，这一篇单独用这个头像
 - 作者栏只在 `info.author` 或站点 `author` 有值时才出现（当前两者都有值，所以一直显示）。
 - 想加「楼主 / Lv1」这类作者标签：`articles.author_label`（`enable`、`auto` 按发文数自动分级、`list` 自定义标签列表）。
 
+## 给文章加密（密码可见）
+
+主题内置了加密（就是 `hexo-blog-encrypt` 的逻辑，不需要装插件），在文章 front matter 写密码即可：
+
+```yaml
+---
+title: 内部教程
+date: 2026-10-02 14:36:00
+password: 1234
+---
+```
+
+读者打开文章会看到密码框，输入正确密码后正文在前端解密显示。正文在 HTML 里是 AES-256-CBC 密文，**不含明文**，所以查看源码也看不到内容。可选字段：`abstract`（列表页显示的摘要）、`message`（密码框提示语）、`wrong_pass_message`。写 `password: ""` 表示显式不加密。
+
+注意：
+
+- 加密只保护正文，**标题、日期、摘要仍公开**，别用它放真正敏感的东西。
+- 加密文章的正文不会以明文进搜索索引（搜不到它的内容），这是符合预期的。
+- **上游合并提醒**：这个功能曾经有个 bug——`scripts/filters/encrypt.js` 末段拼接的浏览器端初始化脚本里混进了 Node 专用的 `log.info(ensurePrefix(...))`，导致浏览器抛 `ReferenceError`、`initHBE()` 不执行、密码框点了没反应。本仓库已删除那一行；将来合并上游主题时如果这一行又出现，需要再删掉（`grep -n "log.info(ensurePrefix" scripts/filters/encrypt.js` 应为空）。
+
 ## 站点身份 / SEO / 页脚
 
 | 想改什么 | 改哪里 |
