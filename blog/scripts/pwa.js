@@ -11,7 +11,7 @@
 const MANIFEST_PATH = "/manifest.webmanifest";
 const SERVICE_WORKER_PATH = "/sw.js";
 const APPLE_TOUCH_ICON = "/images/pwa-icon-180.png";
-const THEME_COLOR = "#A31F34";
+const THEME_COLOR = "#E01B2E";
 
 const HEAD_SNIPPET = `
     <link rel="manifest" href="${MANIFEST_PATH}">

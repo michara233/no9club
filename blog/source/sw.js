@@ -4,7 +4,7 @@
 //
 // 改了缓存策略或想让所有访客强制刷新缓存时，把 VERSION 加一即可。
 
-const VERSION = "v1";
+const VERSION = "v2";
 const CACHE_NAME = `no9club-${VERSION}`;
 
 // 首次安装时预缓存的最小集合（首页 + 图标），断网时至少能看到外壳

@@ -8,6 +8,14 @@ info:
   author: 第九艺术数字产品设计俱乐部
   url: https://no9club.pages.dev
 
+# 站点配色：取自俱乐部 logo（近黑底 + 霓虹红 + 琥珀高光）
+# 色板出处见文件末尾 inject 段，改色只需要动这两个地方。
+colors:
+  # 主色 = logo 字母正面的霓虹红。按钮、分页、目录高亮、标签、链接下划线、选中文字都跟它走
+  primary: "#E01B2E"
+  # 首次访问（没写过 localStorage、也读不到系统偏好）时的兜底色，正常访问会被系统深浅色偏好覆盖
+  default_mode: light
+
 # 图片资源：图片放在仓库根目录的主题 source/images/（主题自带图在那里），
 # 或者放在 blog/source/images/（站点自己的图），两者构建后都在同一个 /images/ 路径下，配置里统一写 /images/文件名。
 # 注意：像 defaults: / home_banner: 这种只写键、子项全被注释掉的写法，会把主题对应的整段配置
@@ -33,6 +41,12 @@ defaults:
 
 # 导航栏（路径对应 blog/source/ 下的页面，图标用 Font Awesome 类名）
 navbar:
+  # 导航栏底色渐变：logo 上的深红阴影 -> 霓虹红。
+  # transparency 是 10-99 的百分数，越大越不透明（35 是主题默认，这里调到 50，品牌色更明显）
+  color:
+    left: "#8E0F1B"
+    right: "#E01B2E"
+    transparency: 50
   links:
     Home:
       path: /
@@ -63,6 +77,10 @@ home_banner:
   subtitle:
     text:
       - 记录与分享游戏制作经验
+  # 横幅文字颜色：暖白（和 logo 的高光同一色温），在两个模式下的深色背景图上都清楚
+  text_color:
+    light: "#FFF4E6"
+    dark: "#FFE9CC"
 
 # SEO / 分享卡片（og:description）描述
 global:
@@ -100,3 +118,68 @@ plugins:
   #   theme:
   #     light: "default"
   #     dark: "dark"
+
+# 全局注入：把品牌配色以 CSS 变量的形式写进每个页面（主题自带的 inject 功能）。
+#
+# 色板出处：logo2025 —— 近黑底 #0B0B0F、霓虹红 #E01B2E、字母下方的深红 #8E0F1B、
+#           描边高光琥珀 #FFC24B、圆环的暗红灰 #3A2B2E。
+#
+# 为什么用注入、而不是直接改主题的 source/css/common/colors.styl：
+#   改主题文件将来合并上游会冲突；注入的这段完全属于站点自己，上游更新不受影响。
+# 为什么选择器写成 html:root / html.light / html.dark：
+#   主题样式用的是 :root / .light / .dark，而注入点在 <head> 里排在主题样式之前，
+#   所以借 html 元素把优先级提高一级（0-1-1 胜过 0-1-0），不受加载顺序影响。
+# 这里只覆盖主题里"写死在 CSS 里"的中性色；主色、导航栏渐变、横幅文字色分别由上面的
+# colors / navbar.color / home_banner.text_color 控制，改那三项就够了。
+inject:
+  enable: true
+  head:
+    - |
+      <style id="no9club-palette">
+      /* No9Club 品牌配色：浅色用暖白，深色贴近 logo 的近黑，卡片描边取 logo 的红色发丝线 */
+      html:root,
+      html.light {
+        --background-color: #FFF9F6;
+        --background-color-transparent: rgba(255, 249, 246, 0.6);
+        --background-color-transparent-15: rgba(255, 249, 246, 0.15);
+        --background-color-transparent-40: rgba(255, 249, 246, 0.4);
+        --background-color-transparent-80: rgba(255, 249, 246, 0.8);
+        --second-background-color: #FBF2EE;
+        --third-background-color: #F8ECE7;
+        --third-background-color-transparent: rgba(248, 236, 231, 0.6);
+        --scroll-bar-bg-color: #FBF2EE;
+        --default-text-color: #3A3330;
+        --first-text-color: #201B19;
+        --second-text-color: #2C2624;
+        --third-text-color: #6B605C;
+        --fourth-text-color: #E7E2DF;
+        --invert-text-color: #FFF4E6;
+        --avatar-background-color: #E01B2E;
+        --copyright-info-color: #C8102E;
+        --pjax-progress-bar-color: linear-gradient(90deg, #8E0F1B, #E01B2E 45%, #FFC24B);
+      }
+      html.dark {
+        --background-color: #0B0B0F;
+        --background-color-transparent: rgba(11, 11, 15, 0.6);
+        --background-color-transparent-15: rgba(11, 11, 15, 0.15);
+        --background-color-transparent-40: rgba(11, 11, 15, 0.4);
+        --background-color-transparent-80: rgba(11, 11, 15, 0.8);
+        --second-background-color: #131318;
+        --third-background-color: #1B1B22;
+        --third-background-color-transparent: rgba(27, 27, 34, 0.6);
+        --scroll-bar-bg-color: #17171C;
+        --scrollbar-color: #6E5A5C;
+        --scrollbar-color-hover: #8E7679;
+        --default-text-color: #C9C3BF;
+        --first-text-color: #E6E1DE;
+        --second-text-color: #D9D3CF;
+        --third-text-color: #9C948F;
+        --fourth-text-color: #3B3733;
+        --invert-text-color: #12100F;
+        --avatar-background-color: #8E0F1B;
+        --copyright-info-color: #8E0F1B;
+        /* 卡片描边（主题把 --shadow-color-1 用作 0 0 0 1px 的边框）：嫌红就调小这个透明度，改成 0.08 即回到原来的白灰边 */
+        --shadow-color-1: rgba(224, 27, 46, 0.26);
+        --pjax-progress-bar-color: linear-gradient(90deg, #8E0F1B, #E01B2E 45%, #FFC24B);
+      }
+      </style>
