@@ -18,6 +18,7 @@ const defaultConfig = {
     "Oh, this is an invalid password. Check and try again, please.",
   wrong_hash_message:
     "OOPS, these decrypted content may changed, but you can still have a look.",
+  again_message: "Encrypt again",
   silent: false,
 };
 
@@ -121,6 +122,7 @@ hexo.extend.filter.register(
       .replace(/{{hbeHmacDigest}}/g, hmacDigest)
       .replace(/{{hbeWrongPassMessage}}/g, config.wrong_pass_message)
       .replace(/{{hbeWrongHashMessage}}/g, config.wrong_hash_message)
+      .replace(/{{hbeAgainMessage}}/g, config.again_message)
       .replace(/{{hbeMessage}}/g, config.message);
     data.content += `<link href="${hexo.config.root}css/hbe.style.css" rel="stylesheet" type="text/css"><script data-swup-reload-script type="module" src="${hexo.config.root}js/plugins/hbe.js"></script>
 <script data-swup-reload-script type="module">

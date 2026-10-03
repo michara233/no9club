@@ -1,5 +1,5 @@
 const hbeTheme = `
-<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="{{hbeWrongPassMessage}}" data-whm="{{hbeWrongHashMessage}}">
+<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="{{hbeWrongPassMessage}}" data-whm="{{hbeWrongHashMessage}}" data-agm="{{hbeAgainMessage}}">
   <script id="hbeData" type="hbeData" data-hmacdigest="{{hbeHmacDigest}}">{{hbeEncryptedData}}</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">

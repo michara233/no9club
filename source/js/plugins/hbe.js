@@ -211,7 +211,10 @@ export function initHBE() {
         }
 
         const hideButton = document.createElement("button");
-        hideButton.textContent = "Encrypt again";
+        // 按钮文案来自 config.encrypt.again_message（见站点 _config.yml），取不到就中文兜底
+        const againLabel = (mainElement.dataset["agm"] || "").trim();
+        hideButton.textContent =
+          againLabel && !againLabel.includes("{{") ? againLabel : "重新上锁";
         hideButton.type = "button";
         hideButton.classList.add("hbe-button");
         hideButton.addEventListener("click", () => {

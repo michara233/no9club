@@ -87,6 +87,38 @@ defaults:
 - 改完 push 等 Cloudflare 重新构建；如果浏览器还显示旧图，按 `Ctrl+F5` 强刷（图片被 Cloudflare 边缘缓存时可能要等几分钟）。
 - 图片路径必须是 `/images/...` 这种以 `/` 开头的站点绝对路径，不要带 `public`、也不要写相对路径。
 
+## 配色（整体色调）
+
+整套配色来自俱乐部 logo，色板如下：
+
+| 角色 | 色值 | 取自 logo 的哪一部分 |
+| --- | --- | --- |
+| 主色（按钮 / 分页 / 目录高亮 / 标签 / 选中文字） | `#E01B2E` | 字母正面的霓虹红 |
+| 深红（导航栏渐变起点、浅色模式进度条起点） | `#8E0F1B` | 字母下方的红色阴影 |
+| 琥珀高光（进度条终点） | `#FFC24B` | 字母描边的高光 |
+| 近黑底（深色模式背景） | `#0B0B0F` | logo 的背景 |
+| 暖白（浅色模式背景 / 横幅文字） | `#FFF9F6` / `#FFF4E6` | 字母最亮的高光 |
+
+改配色只需要动两个地方，都在 `blog/_config.redefine.yml` 里，**不用改主题文件**（改主题将来合并上游会冲突）：
+
+1. **配置项**（会被主题的 CSS 自动用上）
+   - `colors.primary` —— 主色。所有强调色、按钮、分页、目录、标签、链接下划线都跟它走。
+   - `navbar.color.left` / `.right` / `.transparency` —— 导航栏底色渐变（透明度是 10-99 的百分数）。
+   - `home_banner.text_color.light` / `.dark` —— 首页横幅标题文字颜色。
+2. **文件末尾的 `inject` 段**（一段注入到每页 `<head>` 的 `<style>`）
+   - 里面覆盖的是主题里"写死在 CSS 里"的中性色：背景色、正文灰阶、滚动条、卡片描边等。
+   - 注释都写在旁边了，改数值即可；例如嫌深色模式卡片那圈红边太重，把 `--shadow-color-1` 的透明度从 `0.26` 调小，写成 `0.08` 就是主题原来的白灰边。
+   - 选择器写成 `html:root` / `html.light` / `html.dark` 是故意的：注入点在 `<head>` 里排在主题样式之前，靠多一个 `html` 元素提高优先级才能稳定覆盖，和加载顺序无关。
+
+深浅色模式本身由访客的系统偏好决定（主题自带逻辑：先看上次的手动切换、再看系统偏好），`colors.default_mode` 只是没读到偏好时的兜底。
+
+另外两处零散的品牌色（改主色后如果想让它们同步）：
+
+- `blog/scripts/pwa.js` 的 `THEME_COLOR`：手机浏览器地址栏 / 状态栏颜色。
+- `blog/source/manifest.webmanifest` 的 `theme_color`：装成 App 后的系统主题色。
+
+改完 `cd blog && npm run build` 本地能出 `public/`，push 后 Cloudflare 会自动重新构建；浏览器如果还是旧样式，`Ctrl+F5` 强刷一次（改配色时 `blog/source/sw.js` 的 `VERSION` 已加一，会自动清掉旧缓存）。
+
 ## 文章里插入图片
 
 两种写法都实测可用，挑一种顺手的固定用就行。
@@ -173,6 +205,64 @@ password: 1234
 - 加密只保护正文，**标题、日期、摘要仍公开**，别用它放真正敏感的东西。
 - 加密文章的正文不会以明文进搜索索引（搜不到它的内容），这是符合预期的。
 - **上游合并提醒**：这个功能曾经有个 bug——`scripts/filters/encrypt.js` 末段拼接的浏览器端初始化脚本里混进了 Node 专用的 `log.info(ensurePrefix(...))`，导致浏览器抛 `ReferenceError`、`initHBE()` 不执行、密码框点了没反应。本仓库已删除那一行；将来合并上游主题时如果这一行又出现，需要再删掉（`grep -n "log.info(ensurePrefix" scripts/filters/encrypt.js` 应为空）。
+
+## 界面文案（把英文改成中文）
+
+页面上的字只可能来自三个地方。**先看第 1 条**，绝大多数英文都在那里；只有极少数要动第 3 条。
+
+### 1. 主题界面文案 → `languages/zh-CN.yml`（一个文件管全站）
+
+主题的界面文字全部走 i18n：模板和脚本里写的是 `__('key')` 或 `t("key", "English fallback")`，真正显示什么由 `languages/<语言>.yml` 决定。本站语言已经设成中文（`blog/_config.yml` 的 `language: zh-CN`），所以主题自带文案本来就是中文。
+
+**万一某处还是英文**，原因几乎都是：`languages/zh-CN.yml` 里缺这个 key，于是回退成了代码里写死的英文 fallback。处理办法：
+
+1. 在仓库里全局搜这句英文（编辑器搜索或 `grep -rn "原文" layout source/js`），找到对应的 key，形如 `__('read_more')` 或 `t("toc", "On this page")`；
+2. 打开 `languages/zh-CN.yml`，按**同样的层级**补上中文。带点的 key 要写成嵌套缩进，例如 `exif.fields.make` 是这样：
+
+```yaml
+exif:
+  fields:
+    make: 品牌
+```
+
+3. 想顺带支持英文/繁体，就照 `languages/en.yml` 的结构补到对应语言文件里。
+
+这一个文件就是主题界面文案的总表：`read_more`（阅读全文）、`wordcount`（字）、`min2read`（分钟）、`search`（搜索框提示语）、`toc`（目录）、`copyright`（版权声明那一块）、页脚统计……改一处全站生效，完全不用碰主题模板。
+
+### 2. 加密文章的提示语 → `blog/_config.yml` 的 `encrypt` 段
+
+密码相关的文案已经全部改成中文了，想换措辞直接改这几个值：
+
+| 配置项 | 出现在哪 |
+| --- | --- |
+| `encrypt.abstract` | 首页/归档列表里那篇加密文章显示的摘要 |
+| `encrypt.message` | 密码输入框里的提示文字 |
+| `encrypt.wrong_pass_message` | 密码输错时的弹窗 |
+| `encrypt.wrong_hash_message` | 密码对但内容校验没通过时的弹窗（正常不会出现） |
+| `encrypt.again_message` | 解锁成功后正文末尾那个「重新上锁」按钮 |
+
+两个坑：
+
+- 这几句是主题内置的 hexo-blog-encrypt 的**默认英文值**，靠「站点配置覆盖默认值」改成中文的（覆盖逻辑见 `scripts/filters/encrypt.js` 里的 `defaultConfig`）。所以**必须写在 `blog/_config.yml`，写进 `_config.redefine.yml` 是没用的**——后者是主题配置，管不到加密插件。
+- 每条文案里**别用半角双引号 `"`**：它会被拼进 HTML 属性，会把页面截断。要引号就用中文引号「」。
+
+### 3. 写死在模板/脚本里的那几处
+
+这三处不走 i18n，只能改字符串本身：
+
+| 文件 | 原文 | 现状 |
+| --- | --- | --- |
+| `source/js/plugins/hbe.js` | `Encrypt again` | **已改**：现在读 `encrypt.again_message`，取不到就兜底显示「重新上锁」 |
+| `layout/pages/notfound/notfound.ejs` | `Page Not Found` | 本站还没做 404 页面，所以现在看不到；等做 404 页时把这里一起改成「页面不存在」（Cloudflare Pages 认的是站点根目录的 `404.html`） |
+| `layout/pages/shuoshuo/essays.ejs` | `Loading Date...` | 说说页的日期占位，本站没启用说说页，暂时看不到 |
+
+改动都在主题文件里，将来合并上游时留意别被覆盖回去。
+
+### 找不准某句英文在哪
+
+在页面上对着那行字右键 →「检查」，看它落在哪个元素/类名上，再回仓库搜这个类名或这句英文。或者把那句话发我，我直接告诉你它在哪个文件第几行、该改哪条。
+
+改完 `cd blog && npm run build`（或直接 push 让 Cloudflare 构建），`Ctrl+F5` 强刷即可看到效果。
 
 ## 站点身份 / SEO / 页脚
 
