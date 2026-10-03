@@ -182,4 +182,75 @@ inject:
         --shadow-color-1: rgba(224, 27, 46, 0.26);
         --pjax-progress-bar-color: linear-gradient(90deg, #8E0F1B, #E01B2E 45%, #FFC24B);
       }
+      /* ==========================================================================
+         第二套色板：经典配色（调整配色之前、主题自带的那套）
+         由 blog/scripts/palette.js 往 <html> 上打 data-palette="classic" 时才生效；
+         没有这个属性就是上面的 NO9 品牌色。两套色板互相独立，和深浅色模式正交。
+         选择器带了 html[data-palette=...]，比上面的 html:root / html.light 多一级，
+         所以不受加载顺序影响，能稳定覆盖。
+         色值来源：主题源码 source/css/common/colors.styl 的原始值；其中由 Stylus
+         计算出来的那几个（darken/lighten）是用主题自带的 Stylus 引擎实算的，
+         和调整配色之前的显示完全一致。
+         ========================================================================== */
+      html[data-palette="classic"],
+      html[data-palette="classic"].light {
+        --primary-color: #A31F34;
+        --dark-primary-color: #A31F34;
+        --selection-color: #be243c;
+        --background-color: #fff;
+        --background-color-transparent: rgba(255, 255, 255, 0.6);
+        --background-color-transparent-15: rgba(255, 255, 255, 0.15);
+        --background-color-transparent-40: rgba(255, 255, 255, 0.4);
+        --background-color-transparent-80: rgba(255, 255, 255, 0.8);
+        --second-background-color: #fafafa;
+        --third-background-color: #f7f7f7;
+        --third-background-color-transparent: rgba(241, 241, 241, 0.6);
+        --scroll-bar-bg-color: #FAFAFA;
+        --scrollbar-color: #C1C1C1;
+        --scrollbar-color-hover: #A1A1A1;
+        --default-text-color: #373D3F;
+        --first-text-color: #323739;
+        --second-text-color: #343a3c;
+        --third-text-color: #5c6669;
+        --fourth-text-color: #eaeced;
+        --invert-text-color: #bebec6;
+        --border-color: rgba(0, 0, 0, 0.08);
+        --avatar-background-color: #0066CC;
+        --copyright-info-color: #CC0033;
+        --home-banner-text-color: #fff;
+        --pjax-progress-bar-color: linear-gradient(45deg, #f10006, #ef5b00, #e59c01, #19ca05, #00cab5, #0264c8, #c303c3);
+      }
+      html[data-palette="classic"].dark {
+        --primary-color: #A31F34;
+        --dark-primary-color: #A31F34;
+        --selection-color: #be243c;
+        --background-color: #202124;
+        --background-color-transparent: rgba(32, 33, 36, 0.4);
+        --background-color-transparent-15: rgba(32, 33, 36, 0.15);
+        --background-color-transparent-40: rgba(32, 33, 36, 0.4);
+        --background-color-transparent-80: rgba(32, 33, 36, 0.8);
+        --second-background-color: #242529;
+        --third-background-color: #292b2f;
+        --third-background-color-transparent: rgba(32, 33, 36, 0.6);
+        --scroll-bar-bg-color: #2a2c30;
+        --scrollbar-color: #898989;
+        --scrollbar-color-hover: #A1A1A1;
+        --default-text-color: #bebec6;
+        --first-text-color: #d2d2d7;
+        --second-text-color: #cbcbd1;
+        --third-text-color: #9595a2;
+        --fourth-text-color: #36363e;
+        --invert-text-color: #373D3F;
+        --border-color: rgba(255, 255, 255, 0.08);
+        --shadow-color-1: rgba(255, 255, 255, 0.08);
+        --shadow-color-2: rgba(255, 255, 255, 0.05);
+        --avatar-background-color: #005cb8;
+        --copyright-info-color: #a30029;
+        --home-banner-text-color: #d1d1b6;
+        --pjax-progress-bar-color: linear-gradient(45deg, #ea404a, #ea722f, #e9a71f, #67e559, #18ecec, #1b85f1, #ee1dee);
+      }
+      /* 导航栏渐变是 Stylus 编译期算好的，切换色板要单独覆盖 */
+      html[data-palette="classic"] .navbar-container {
+        background: linear-gradient(120deg, rgba(247, 135, 54, 0.208) 0%, rgba(54, 125, 247, 0.208) 100%);
+      }
       </style>
