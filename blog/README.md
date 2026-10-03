@@ -56,6 +56,14 @@ npm run dev                      # 本地预览 http://localhost:4000
 
 归档（`/archives`）、分类（`/categories`）、标签（`/tags`）三个页面已在 `source/` 下建好，导航栏链接在 `_config.redefine.yml` 的 `navbar.links` 里，可自行增删。
 
+### 加一个独立页面（不是文章）
+
+文章会进首页列表和归档，**独立页面不会**，适合"关于""使用指南""友链"这类固定内容。做法：在 `blog/source/<网址路径>/index.md` 写 Markdown，只留 `title` 和 `date` 两个 front matter 字段即可，渲染出来就是 `/<网址路径>/`。
+
+现成的例子是站点的《使用指南》：正文在 `source/guide/index.md`，网址 `/guide/`，导航栏的「指南」指向它（`_config.redefine.yml` 的 `navbar.links`）。改内容只动那个 Markdown；不要了就把 `navbar.links` 里的那条去掉。
+
+注意：页面文件名别用 `archives`、`categories`、`tags`、`links`、`essays`、`404` 这几个词——主题对它们有专用模板。
+
 ## 换头像 / 图标 / 其它图片
 
 1. 把图片放进 `blog/source/images/`（构建时原样发布到 `/images/...`）。

@@ -60,6 +60,10 @@ navbar:
     标签:
       path: /tags
       icon: fa-regular fa-tags
+    指南:
+      # 页面正文在 blog/source/guide/index.md
+      path: /guide
+      icon: fa-regular fa-circle-question
   # 站内搜索（本地搜索）：索引由 hexo-generator-searchdb 生成，配置在 blog/_config.yml 的 search 段
   search:
     enable: true
