@@ -4,7 +4,7 @@ date: 2026-10-06 21:16:00
 excerpt: C# 进阶笔记 — 集合、泛型、委托与事件、协变逆变、多线程、反射特性、迭代器与常用语法糖
 author: "米猹"
 avatar: /images/micha.jpg 
-tags: [csharp, 基础知识, 速查，程序向]
+tags: [csharp, 基础知识速查, 程序向]
 category: 基础知识
 ---
 
