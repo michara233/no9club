@@ -95,8 +95,8 @@
     <!--- Seo Part-->
     <%- generateMeta(theme, page) %>
     <%- autoCanonical(config, page) %>
-    <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow">
+    <meta name="robots" content="<%= page.hidden ? 'noindex,nofollow' : 'index,follow' %>">
+    <meta name="googlebot" content="<%= page.hidden ? 'noindex,nofollow' : 'index,follow' %>">
     <meta name="revisit-after" content="1 days">
     
     <% if (openGraphEnabled) { %>

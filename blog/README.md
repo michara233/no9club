@@ -64,6 +64,30 @@ npm run dev                      # 本地预览 http://localhost:4000
 
 注意：页面文件名别用 `archives`、`categories`、`tags`、`links`、`essays`、`404` 这几个词——主题对它们有专用模板。
 
+### 加一篇隐藏文章（彩蛋）
+
+文章 front matter 写 `hidden: true`，它仍会按 `permalink` 生成页面，但不会进首页、归档、分类、标签、站内搜索和 RSS。示例见 `source/_posts/零食铺.md`（网址 `/snack/`）：
+
+```yaml
+---
+title: 零食铺
+date: 2026-10-22 21:53:00
+hidden: true
+permalink: snack/
+---
+```
+
+然后在任意文章 front matter 里加 `snack_link`，文章右上角会出现一个很淡的饼干图标，点它跳到隐藏文章：
+
+```yaml
+snack_link: /snack/
+snack_label: 零食铺   # 可选，图标的无障碍名称
+```
+
+- 隐藏只是「不列出」，**不是加密**；真要保护内容请用 `password`。
+- 隐藏文章别写 `categories` / `tags`，否则它们仍可能出现在分类/标签页。
+- 实现：`blog/scripts/hidden-posts.js` 在生成前把 `hidden: true` 的文章从列表数据里摘掉，再单独生成它们的页面。
+
 ## 换头像 / 图标 / 其它图片
 
 1. 把图片放进 `blog/source/images/`（构建时原样发布到 `/images/...`）。

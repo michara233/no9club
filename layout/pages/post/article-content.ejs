@@ -1,7 +1,12 @@
 <div class="post-page-container flex relative justify-between box-border w-full h-full">
 	<div class="article-content-container">
 
-		<div class="article-title relative w-full">
+		<div class="article-title relative w-full<%= page.snack_link ? ' has-snack-link' : '' %>">
+			<% if (page.snack_link) { %>
+			<a class="article-snack-link" href="<%= url_for(page.snack_link) %>" rel="nofollow" aria-label="<%= page.snack_label || 'Snack' %>">
+				<i class="fa-solid fa-cookie-bite" aria-hidden="true"></i>
+			</a>
+			<% } %>
 			<% if (page.cover || page.banner || (page.thumbnail && page.thumbnail !== false)) { %>
 			<% let articleCover = "";
                 if (page.cover && page.cover.includes("/")) {

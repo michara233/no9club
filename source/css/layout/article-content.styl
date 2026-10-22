@@ -75,6 +75,49 @@ $gap = 30px
       box-shadow none !important
       max-width 100vw
 
+    .article-title
+      &.has-snack-link
+        .article-title-regular
+          padding-right 3rem
+
+      .article-snack-link
+        position absolute
+        top 14px
+        right 14px
+        z-index 2
+        display inline-flex
+        align-items center
+        justify-content center
+        width 34px
+        height 34px
+        border-radius 50%
+        color var(--third-text-color)
+        opacity 0.3
+        text-decoration none
+        -webkit-tap-highlight-color transparent
+        transition opacity 0.2s ease, color 0.2s ease, transform 0.2s ease
+
+        &:hover,
+        &:focus-visible
+          opacity 1
+          color var(--primary-color)
+          transform rotate(-14deg) scale(1.05)
+
+        &:focus-visible
+          outline 2px solid var(--primary-color)
+          outline-offset 2px
+
+        i
+          font-size 15px
+          pointer-events none
+
+        +redefine-mobile()
+          top 8px
+          right 8px
+          width 38px
+          height 38px
+          opacity 0.4
+
     .article-header .avatar img
           border-radius: $redefine-border-radius-medium * 0.87
           width 100%
